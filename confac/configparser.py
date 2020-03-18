@@ -44,7 +44,7 @@ class ConfigParser(configparser.ConfigParser):
 
         sec = {}
         for opt, typ in options.items():
-            if self.has_option(sec, opt):
+            if self.has_option(section, opt):
                 if typ == 'bool':
                     sec[opt] = self.getboolean(section, opt)
                 elif typ == 'int':
@@ -57,6 +57,8 @@ class ConfigParser(configparser.ConfigParser):
                     sec[opt] = eval(self.get(section, opt))
                 elif typ == 'str':
                     sec[opt] = self.get(section, opt)
+                else:
+                    ValueError("invalid type {}".format(typ))
         return sec
 
     def dump_section(self, section, recursive=False, dump=None):

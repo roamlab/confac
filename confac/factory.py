@@ -68,7 +68,7 @@ def _get_attr(config, section):
         Module attribute
 
     """
-    entrypoint = config.get(section_name, 'entrypoint')
+    entrypoint = config.get(section, 'entrypoint')
     module, name = entrypoint.split(':')
     module = importlib.import_module(module)
     attr = getattr(module, name)
