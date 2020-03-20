@@ -78,7 +78,8 @@ class ConfigParser(configparser.ConfigParser):
             assert isinstance(dump, configparser.ConfigParser)
 
         if self.has_section(section):
-            dump.add_section(section)
+            if not dump.has_section(section):
+                dump.add_section(section)
             for opt, val in self.items(section):
                 dump.set(section, opt, val)
                 if recursive:
@@ -102,7 +103,7 @@ class ConfigParser(configparser.ConfigParser):
         self.remove_section(old)
 
     def getlist(self, section, option):
-        return ast.literal_eval(self.getlist(section, option))
+        return ast.literal_eval(self.get(section, option))
 
     def getint(self, *args, **kwargs):
         return int(super().getfloat(*args, **kwargs))
